@@ -5,6 +5,7 @@
 Но из-за "нехватки времени" решил упростить задачу.
 
 Теперь можно будет установить ограничения для пользователя через:
+
 1. seccomp (http://man7.org/linux/man-pages/man2/seccomp.2.html)
 2. libcap (capabilities) http://man7.org/linux/man-pages/man3/libcap.3.html
 3. setrlimit(http://linux.die.net/man/2/setrlimit)
