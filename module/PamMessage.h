@@ -5,10 +5,11 @@
 
 #include <string>
 
-class PamMessage
+class PamMessage : private pam_message
 {
 public:
-    explicit PamMessage(const std::string& text);
+    explicit PamMessage(const std::string& text = "");
+    explicit PamMessage(const pam_message* message);
     PamMessage(const PamMessage& rhs);
     PamMessage& operator =(const PamMessage& rhs);
     ~PamMessage();
@@ -19,14 +20,8 @@ public:
     int get_style() const noexcept;
     void set_style(int style) noexcept;
 
-    operator struct pam_message& ();
-    operator const struct pam_message& () const;
-
-private:
-    void free_message() noexcept;
-
-private:
-    struct pam_message m_message;
+    operator struct pam_message* ();
+    operator const struct pam_message* () const;
 };
 
 
