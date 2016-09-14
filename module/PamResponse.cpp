@@ -4,18 +4,18 @@
 #include <cstring>
 
 PamResponse::PamResponse(const std::string &text)
+ : pam_response{nullptr, 0}
 {
     set_text(text);
     resp_retcode = 0;
 }
 
 PamResponse::PamResponse(const pam_response* response)
-{
-    resp = response->resp;
-    resp_retcode = 0;
-}
+ : pam_response(*response)
+{}
 
 PamResponse::PamResponse(const PamResponse &rhs)
+ : pam_response{nullptr, 0}
 {
     set_text( rhs.get_text() );
 }
@@ -29,6 +29,13 @@ PamResponse& PamResponse::operator=(const PamResponse &rhs)
     return *this;
 }
 
+PamResponse& PamResponse::operator= (const pam_response* response)
+{
+    if(resp)
+        free(resp);
+    resp = response->resp;
+    return *this;
+}
 
 PamResponse::~PamResponse()
 {

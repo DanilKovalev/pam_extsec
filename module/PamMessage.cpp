@@ -4,18 +4,19 @@
 #include <cstring>
 
 PamMessage::PamMessage(const std::string &text)
+ : pam_message{0, nullptr}
 {
     set_text(text);
     msg_style = 0;
 }
 
 PamMessage::PamMessage(const pam_message* message)
+ : pam_message(*message)
 {
-    msg = message->msg;
-    set_style(message->msg_style);
 }
 
 PamMessage::PamMessage(const PamMessage &rhs)
+ : pam_message{0, nullptr}
 {
     set_text( rhs.get_text() );
     set_style( rhs.get_style() );
@@ -32,6 +33,15 @@ PamMessage &PamMessage::operator=(const PamMessage &rhs)
     return *this;
 }
 
+PamMessage& PamMessage::operator=( const pam_message* message )
+{
+    if(msg)
+        free((char*)msg);
+
+    msg = message->msg;
+    msg_style = message->msg_style;
+    return *this;
+}
 
 PamMessage::~PamMessage()
 {
@@ -51,7 +61,7 @@ void PamMessage::set_text(const std::string &text)
         if( msg == nullptr )
             throw std::bad_alloc();
 
-        std::free((char*)msg);
+        std::free((char*)old_text);
     }
     catch (std::exception& ex)
     {

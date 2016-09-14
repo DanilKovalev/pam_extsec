@@ -12,6 +12,7 @@ public:
     explicit PamResponse(const pam_response* response);
     PamResponse(const PamResponse& rhs);
     PamResponse& operator =(const PamResponse& rhs);
+    PamResponse& operator =(const pam_response* response);
 
     ~PamResponse();
 

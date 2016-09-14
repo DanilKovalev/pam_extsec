@@ -9,35 +9,53 @@ class CArrayWrapper
 public:
     explicit CArrayWrapper(size_t num) : m_num(num), m_array(nullptr)
     {
-        m_array = new T*[num];
-        for(size_t i =0; i < num; i++)
-            m_array[i] = new T;
+        m_array = new T[m_num];
     }
+
+    explicit CArrayWrapper(T* array, size_t num) : m_num(num), m_array(array)
+    {}
 
     CArrayWrapper(const CArrayWrapper&) = delete;
+
+    CArrayWrapper( CArrayWrapper&& rhs) : m_num(rhs.m_num), m_array(rhs.m_array)
+    {
+        rhs.m_array = nullptr;
+        rhs.m_num = 0;
+    }
+
     CArrayWrapper& operator=(const CArrayWrapper&) = delete;
+    CArrayWrapper& operator=( CArrayWrapper&& rhs)
+    {
+        clear();
+        m_array = rhs.m_array;
+        rhs.m_array = nullptr;
+        m_num = rhs.m_num;
+        rhs.m_num = 0;
+        return *this;
+    }
 
-    ~CArrayWrapper(){free_array();}
+    ~CArrayWrapper(){ clear(); }
 
-    const T& operator[] (int indx) const {return *m_array[indx];}
-    T& operator[] (int indx) {return *m_array[indx];}
+    size_t size() const { return m_num; }
 
-    operator T** () const noexcept { return m_array; };
-    operator const T** () const noexcept {return m_array;};
+    const T& operator[] (int indx) const {return m_array[indx];}
+    T& operator[] (int indx) {return m_array[indx];}
+
+    operator T* () noexcept { return m_array; };
+    operator const T* () const noexcept {return (const T*)m_array;};
+
+    void clear()
+    {
+        delete[] m_array;
+        m_array = nullptr;
+        m_num = 0;
+    }
 
 private:
-    void free_array() noexcept
-    {
-        ///@todo: check delete vs free
-        for(size_t i =0; i < m_num; i++)
-            delete m_array[i];
-
-        delete m_array;
-    }
 
 private:
     size_t m_num = 0;
-    T**    m_array;
+    T*     m_array;
 };
 
 

@@ -12,6 +12,7 @@ public:
     explicit PamMessage(const pam_message* message);
     PamMessage(const PamMessage& rhs);
     PamMessage& operator =(const PamMessage& rhs);
+    PamMessage& operator =( const pam_message* message );
     ~PamMessage();
 
     std::string get_text() const;
