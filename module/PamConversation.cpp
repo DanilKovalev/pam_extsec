@@ -40,7 +40,7 @@ std::vector<PamResponse> PamConversation::ask(const std::vector<PamMessage> &mes
     CArrayWrapper<pam_response> wrap_responses = ask(wrap_messages);
     std::vector<PamResponse> responses(wrap_responses.size());
     for(size_t i = 0; i < wrap_responses.size(); i++)
-        responses[i] = &wrap_responses[i];
+        responses[i] = wrap_responses[i];
 
     return responses;
 }

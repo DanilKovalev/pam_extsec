@@ -10,8 +10,8 @@ PamMessage::PamMessage(const std::string &text)
     msg_style = 0;
 }
 
-PamMessage::PamMessage(const pam_message* message)
- : pam_message(*message)
+PamMessage::PamMessage(const pam_message& message)
+ : pam_message(message)
 {
 }
 

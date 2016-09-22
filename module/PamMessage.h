@@ -9,7 +9,7 @@ class PamMessage : private pam_message
 {
 public:
     explicit PamMessage(const std::string& text = "");
-    explicit PamMessage(const pam_message* message);
+    explicit PamMessage(const pam_message& message);
     PamMessage(const PamMessage& rhs);
     PamMessage& operator =(const PamMessage& rhs);
     PamMessage& operator =( const pam_message* message );

@@ -20,8 +20,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
     retval = pam_get_item( pamh, PAM_CONV, (const void **) &conv ) ;
     PamConversation conversation(conv);
 
-
-//    conversation.ask();
+//    conv.
 
     struct pam_conv;
     return PAM_SUCCESS;

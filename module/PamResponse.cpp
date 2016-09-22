@@ -10,8 +10,8 @@ PamResponse::PamResponse(const std::string &text)
     resp_retcode = 0;
 }
 
-PamResponse::PamResponse(const pam_response* response)
- : pam_response(*response)
+PamResponse::PamResponse(const pam_response& response)
+ : pam_response(response)
 {}
 
 PamResponse::PamResponse(const PamResponse &rhs)
@@ -29,11 +29,11 @@ PamResponse& PamResponse::operator=(const PamResponse &rhs)
     return *this;
 }
 
-PamResponse& PamResponse::operator= (const pam_response* response)
+PamResponse& PamResponse::operator= (const pam_response& response)
 {
     if(resp)
         free(resp);
-    resp = response->resp;
+    resp = response.resp;
     return *this;
 }
 
