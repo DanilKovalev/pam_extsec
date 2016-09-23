@@ -50,18 +50,6 @@ void print_messages(const pam_message* messages)
 
 int main()
 {
-//    pam_getenv()
-    CArrayWrapper<pam_message> z(4);
-    z[0].msg = ::strdup("0");
-    z[1].msg = ::strdup("1");
-    z[2].msg = ::strdup("2");
-    z[3].msg = ::strdup("3");
-
-    PamMessage message("message");
-    z[3] = *message;
-
-    print_messages(z);
-
     //------------------------------------
 
     pam_conv *conv = new struct pam_conv;
@@ -74,10 +62,14 @@ int main()
     messages1.emplace_back("2");
     messages1.emplace_back("3");
     PamConversation conversation(conv);
-    auto a = conversation.ask(z);
-    auto a2 = conversation.ask(messages1);
-    print_responses(a2);
+    auto a = conversation.ask(messages1);
+    print_responses(a);
 
 
-    Capability::get_proc();
+    auto cap = Capability::from_proc();
+    std::cout << cap.to_text() << std::endl;
+
+    auto cap2 = Capability::from_text( cap.to_text() );
+    std::cout << cap2.to_text() << std::endl;
+
 }

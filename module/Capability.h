@@ -1,6 +1,8 @@
 #ifndef CAPABILITY_H
 #define CAPABILITY_H
 
+#include <string>
+
 #include <sys/capability.h>
 
 class Capability
@@ -12,10 +14,20 @@ public:
     ~Capability();
 
     inline cap_t get() noexcept;
-    static Capability get_proc( pid_t pid = 0 );
+    inline const _cap_struct* get() const noexcept;
+    void set_proc( );
+
+    std::string to_text() const;
+
+    void set_inheritable_flag();
+    void clear_inheritable_flag();
+
+    static Capability from_text(const std::string& text);
+    static Capability from_proc(pid_t pid = 0);
+
 private:
     static cap_t copy_cap(const cap_t cap);
-    static void  clear_cap(cap_t cap);
+    static void free_cap(cap_t cap);
 
 private:
     cap_t m_cap;

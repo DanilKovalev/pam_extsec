@@ -1,5 +1,7 @@
 #include <exception>
 #include <system_error>
+#include <memory>
+#include <string.h>
 #include "Capability.h"
 
 Capability::Capability(cap_t cap)
@@ -17,7 +19,7 @@ Capability::~Capability()
 {
     try
     {
-        clear_cap(m_cap);
+        free_cap(m_cap);
     }
     catch (...)
     {
@@ -25,6 +27,11 @@ Capability::~Capability()
 }
 
 inline cap_t Capability::get() noexcept
+{
+    return m_cap;
+}
+
+inline const _cap_struct* Capability::get() const noexcept
 {
     return m_cap;
 }
@@ -40,7 +47,7 @@ Capability& Capability::operator=(const Capability &rhs)
         if(rhs.m_cap)
             copy_cap(rhs.m_cap);
 
-        clear_cap(old_cap);
+        free_cap(old_cap);
         return *this;
     }
     catch (std::exception& ex)
@@ -54,27 +61,65 @@ cap_t Capability::copy_cap(const cap_t cap)
 {
     cap_t ret = cap_copy_int( cap );
     if( !ret )
-        std::system_error( std::error_code(errno, std::generic_category() ), "Unable to copy capability." );
+        throw std::system_error( std::error_code(errno, std::generic_category() ), "Unable to copy capability." );
 
     return ret;
 }
 
-void Capability::clear_cap(cap_t cap)
+void Capability::free_cap(cap_t cap)
 {
     if( !cap )
         return;
 
-    if ( cap_clear(cap) )
-        std::system_error( std::error_code(errno, std::generic_category() ), "Unable to clear capability." );
+    if ( cap_free(cap) )
+        throw std::system_error( std::error_code(errno, std::generic_category() ), "Unable to clear capability." );
 }
 
-Capability Capability::get_proc(pid_t pid)
+Capability Capability::from_proc(pid_t pid)
 {
     cap_t cap = cap_get_pid(pid);
     if( !cap )
-        std::system_error( std::error_code(errno, std::generic_category() ), "Unable to get capability for process." );
+        throw std::system_error( std::error_code(errno, std::generic_category() ), "Unable to get capability for process." );
 
     return Capability(cap);
 }
+
+Capability Capability::from_text(const std::string& text)
+{
+    cap_t cap = cap_from_text( text.data() );
+    if( !cap )
+        throw std::system_error( std::error_code(errno, std::generic_category() ), "Unable to get capability from a text." );
+
+    return Capability(cap);
+}
+
+void Capability::set_proc( )
+{
+    if( cap_set_proc(m_cap) )
+        throw std::system_error( std::error_code(errno, std::generic_category() ), "Unable to set capability for process." );
+}
+
+std::string Capability::to_text() const
+{
+    ssize_t szText = 0;
+    std::unique_ptr<char, decltype(cap_free)*> ptrText(cap_to_text(m_cap, &szText), cap_free);
+    if (!ptrText)
+        throw std::system_error(std::error_code(errno, std::generic_category()),
+                                "Unable to convert capability to text.");
+
+    return std::string(ptrText.get(), szText);
+}
+
+void Capability::set_inheritable_flag()
+{
+    CAP_CHOWN
+    if( cap_set_flag() )
+}
+
+void Capability::clear_inheritable_flag()
+{
+
+}
+
 
 

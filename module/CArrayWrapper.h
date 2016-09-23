@@ -2,6 +2,7 @@
 #define CARRAYWRAPPER_H
 
 #include <cstddef>
+#include <cstdlib>
 
 template <class T>
 class CArrayWrapper
@@ -9,7 +10,7 @@ class CArrayWrapper
 public:
     explicit CArrayWrapper(size_t num) : m_num(num), m_array(nullptr)
     {
-        m_array = new T[m_num];
+        m_array = (T*)::malloc(sizeof(T) * m_num);
     }
 
     explicit CArrayWrapper(T* array, size_t num) : m_num(num), m_array(array)
@@ -46,7 +47,7 @@ public:
 
     void clear()
     {
-        delete[] m_array;
+        ::free(m_array);
         m_array = nullptr;
         m_num = 0;
     }
