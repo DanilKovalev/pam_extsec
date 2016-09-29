@@ -7,4 +7,4 @@ file(GLOB SOURCES
 
 include_directories(${CMAKE_HOME_DIRECTORY}/module)
 add_executable(${PROJECT} ${SOURCES})
-target_link_libraries(${PROJECT} pam_stepic)
+target_link_libraries(${PROJECT} pam_stepic -lcppunit)

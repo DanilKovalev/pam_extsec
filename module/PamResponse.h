@@ -1,7 +1,6 @@
 #ifndef PAMRESPONSE_H
 #define PAMRESPONSE_H
 
-
 #include <security/pam_modules.h>
 #include <string>
 
