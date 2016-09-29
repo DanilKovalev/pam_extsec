@@ -1,0 +1,21 @@
+{
+  "tty1": {
+    "capabilities": [
+      "cap_chown",
+      "cap_kill"
+    ],
+    "syscalls": [
+      "nanosleep",
+      "mmap"
+    ]
+  },
+  "tty2": {
+    "capabilities": [
+      "cap_chown",
+      "cap_kill"
+    ],
+    "syscalls": [
+      "nanosleep"
+    ]
+  }
+}

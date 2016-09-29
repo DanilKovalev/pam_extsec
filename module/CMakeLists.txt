@@ -6,4 +6,4 @@ file(GLOB SOURCES
         )
 
 add_library(${PROJECT} SHARED ${SOURCES})
-target_link_libraries(${PROJECT} -lpam -lcap)
+target_link_libraries(${PROJECT} -lpam -lcap -ljsoncpp)
