@@ -1,6 +1,11 @@
-include_directories(${CMAKE_HOME_DIRECTORY}/module)
-
 set(PROJECT pam_stepic_tests)
+
+find_library(LIB_CPPUNIT cppunit )
+if(NOT LIB_CPPUNIT)
+    message(FATAL_ERROR "cppunit library not found")
+endif()
+
+include_directories(${CMAKE_HOME_DIRECTORY}/module)
 
 file(GLOB SOURCES
         "*.h"

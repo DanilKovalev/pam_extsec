@@ -3,10 +3,12 @@ project(pam_stepic)
 
 set(PROJECT pam_stepic)
 
-set ("${PROJECT}_BINARY_DIR"  bin)
-set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/${${PROJECT}_BINARY_DIR})
-set (TEST_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/${${PROJECT}_BINARY_DIR}/test)
-set (EXAMPLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/${${PROJECT}_BINARY_DIR}/example)
+set (OUTPUT_DIR ${CMAKE_HOME_DIRECTORY}/output)
+set (EXECUTABLE_OUTPUT_PATH ${OUTPUT_DIR}/bin)
+set (TEST_OUTPUT_PATH ${OUTPUT_DIR}/test)
+set (EXAMPLE_OUTPUT_PATH ${OUTPUT_DIR}/example)
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR}/lib)
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR}/lib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -Weffc++ -Wunused-result")
 
@@ -16,8 +18,6 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}  -D_DEBUG -g ")
-
-message(${CMAKE_CXX_FLAGS_DEBUG})
 
 enable_testing()
 add_subdirectory(module)

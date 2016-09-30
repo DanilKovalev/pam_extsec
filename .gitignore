@@ -1,4 +1,4 @@
-bin
+output
 .*
 # Compiled Object files
 *.slo
