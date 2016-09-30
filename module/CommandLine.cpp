@@ -1,7 +1,5 @@
 #include "CommandLine.h"
 
-#include <boost/program_options.hpp>
-
 namespace po = boost::program_options;
 
 #define DEFAULT_CONF_PATH "/etc/security/pam_stepic.conf"
