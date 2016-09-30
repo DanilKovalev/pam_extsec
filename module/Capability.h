@@ -17,6 +17,8 @@ public:
     Capability& operator = (const Capability& rhs);
     ~Capability();
 
+    void destroy();
+
     inline cap_t get() noexcept;
     inline const _cap_struct* get() const noexcept;
     void set_proc( void );
@@ -40,14 +42,6 @@ public:
 
     static Capability from_text(const std::string& text);
     static Capability from_proc(pid_t pid = 0);
-
-private:
-    ///@todo: move to h/cpp
-    static cap_t copy_cap(const cap_t cap);
-    static cap_t cap_init();
-    static void cap_free(cap_t cap);
-    static void cap_set_flag(cap_t, cap_flag_t, cap_value_t, cap_flag_value_t);
-    static bool cap_get_flag(cap_t, cap_value_t, cap_flag_t );
 
 private:
     cap_t m_cap;
