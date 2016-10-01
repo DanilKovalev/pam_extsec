@@ -35,8 +35,8 @@ config ConfigFile::parse_object(const Json::Value obj)
     {
         if( capabilities.isArray() )
             ret_config.capability = parse_array(capabilities);
-        else
-            ; ///@todo: write to syslog
+//        else
+             ///@todo: write to syslog
     }
 
     auto syscalls =  obj["syscalls"];
@@ -44,8 +44,8 @@ config ConfigFile::parse_object(const Json::Value obj)
     {
         if( syscalls.isArray() )
             ret_config.syscalls = parse_array(syscalls);
-        else
-            ; ///@todo: write to syslog
+//        else
+            ///@todo: write to syslog
     }
 
     return ret_config;

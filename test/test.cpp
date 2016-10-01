@@ -6,6 +6,8 @@
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/CompilerOutputter.h>
 
+#include <seccomp.h>
+
 CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( CapabilityTest, "CapabilityTest" );
 CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( SecCompTest, "SecCompTest" );
 CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( ConfigTest, "ConfigFileTest" );
