@@ -1,6 +1,7 @@
 #ifndef CAPABILITY_H
 #define CAPABILITY_H
 
+
 #include <string>
 #include <utility>
 
@@ -38,7 +39,7 @@ public:
     bool is_permitted__flag_set(cap_value_t cap_value) const;
 
     friend
-    bool operator == (const Capability& lhs, const Capability& rhs);
+    bool operator==( const Capability &lhs, const Capability &rhs );
 
     static Capability from_text(const std::string& text);
     static Capability from_proc(pid_t pid = 0);
