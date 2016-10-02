@@ -1,20 +1,28 @@
 #ifndef SECCOMP_H
 #define SECCOMP_H
 
-#define _GNU_SOURCE 1
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 #include <seccomp.h>
-#include <time.h>
+
+#include <string>
 
 class SecComp
 {
 public:
-//    SecComp() {ALLOW_SYSCALL(nanosleep); }
+    SecComp();
+    ~SecComp();
+
+    void destroy();
+
+    void add_forbidden( const std::string &syscall_name );
+    void add_allow( const std::string &syscall_name );
+
+    void load();
+
+private:
+
+    scmp_filter_ctx m_scmp_ctx;
 };
 
 
-#endif // PAM_STEPIC_SECCOMP_H
+#endif // SECCOMP_H

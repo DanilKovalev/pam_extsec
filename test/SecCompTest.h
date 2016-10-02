@@ -9,12 +9,10 @@ class SecCompTest : public CppUnit::TestCase
 {
 public:
     SecCompTest(): TestCase("SecCompTest.")  {}
-    void check_1() ;
-    void check_2() ;
+    void check_forbidden();
 
     CPPUNIT_TEST_SUITE( SecCompTest );
-//        CPPUNIT_TEST( check_1 );
-//        CPPUNIT_TEST( check_2 );
+        CPPUNIT_TEST( check_forbidden );
     CPPUNIT_TEST_SUITE_END();
 };
 

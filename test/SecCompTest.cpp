@@ -1,11 +1,10 @@
 #include "SecCompTest.h"
+#include "SecComp.h"
 
-void SecCompTest::check_1()
+void SecCompTest::check_forbidden()
 {
-    CPPUNIT_ASSERT_MESSAGE("Sec check1", false);
+    SecComp scmp;
+    CPPUNIT_ASSERT_NO_THROW(scmp.add_forbidden("close"));
+    CPPUNIT_ASSERT_THROW(scmp.add_forbidden("not_exist_syscall"), std::exception);
 }
 
-void SecCompTest::check_2()
-{
-    CPPUNIT_ASSERT_MESSAGE("Sec chec2", false);
-}
