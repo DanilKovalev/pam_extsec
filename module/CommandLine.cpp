@@ -22,7 +22,6 @@ void CommandLine::parse_option( int argc, const char **argv )
     }
     catch ( std::exception &e )
     {
-        ///@todo: need syslog
         throw;
     }
 }

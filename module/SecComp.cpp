@@ -1,5 +1,7 @@
 #include "SecComp.h"
 
+#include "PamLogging.h"
+
 #include <seccomp.h>
 #include <system_error>
 
@@ -29,7 +31,8 @@ SecComp::~SecComp()
     }
     catch (std::exception& ex)
     {
-        ; ///@todo: write to log
+        pam_log->write_warn("Unable to destroy object seccomp.");
+        pam_log->write_warn(ex.what());
     }
 }
 

@@ -1,5 +1,7 @@
 #include "ConfigFile.h"
 
+#include "PamLogging.h"
+
 #include <fstream>
 
 ConfigFile::ConfigFile(const std::string &path)
@@ -35,8 +37,8 @@ config ConfigFile::parse_object(const Json::Value obj)
     {
         if( capabilities.isArray() )
             ret_config.capability = parse_array(capabilities);
-//        else
-             ///@todo: write to syslog
+        else
+            pam_log->write_warn("Bad config file format.");
     }
 
     auto syscalls =  obj["syscalls"];
@@ -44,8 +46,8 @@ config ConfigFile::parse_object(const Json::Value obj)
     {
         if( syscalls.isArray() )
             ret_config.syscalls = parse_array(syscalls);
-//        else
-            ///@todo: write to syslog
+        else
+            pam_log->write_warn("Bad config file format.");
     }
 
     return ret_config;

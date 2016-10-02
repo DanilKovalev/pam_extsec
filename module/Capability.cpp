@@ -1,6 +1,7 @@
 #include "Capability.h"
 
 #include "LibCapWrapper.h"
+#include "PamLogging.h"
 
 #include <exception>
 #include <system_error>
@@ -29,9 +30,10 @@ Capability::~Capability()
         if(m_cap)
             destroy();
     }
-    catch (...)
+    catch (std::exception& ex)
     {
-        ///@todo: write to syslog
+        pam_log->write_warn("Unable to destroy object capability.");
+        pam_log->write_warn( ex.what());
     }
 }
 
