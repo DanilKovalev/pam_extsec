@@ -3,8 +3,6 @@
 
 
 #include <string>
-extern int f;
-extern int* pf;
 
 class Syslog
 {
