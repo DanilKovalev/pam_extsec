@@ -1,4 +1,4 @@
-set(PROJECT pam_stepic)
+set(PROJECT pam_extsec)
 
 
 find_library(LIB_PAM pam )

@@ -13,7 +13,7 @@ file(GLOB SOURCES
         )
 
 add_executable(${PROJECT} ${SOURCES})
-target_link_libraries(${PROJECT} pam_stepic -lcppunit)
+target_link_libraries(${PROJECT} pam_extsec -lcppunit)
 
 
 add_test(NAME "${PROJECT}"
